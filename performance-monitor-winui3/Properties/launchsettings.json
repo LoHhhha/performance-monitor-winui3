@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "performance-monitor-winui3 (Package)": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    },
+    "performance-monitor-winui3 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
