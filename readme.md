@@ -45,8 +45,8 @@
 #### 页面展示
 
 <center class="half">
-    <img src=".\picture\monitor_page_0.png" width="300"/>
-    <img src=".\picture\monitor_page_1.png" width="300"/>
+    <img src=".\picture\monitor_page_0.png" height="500"/>
+    <img src=".\picture\monitor_page_1.png" height="500"/>
 </center>
 
 * 多种性能指标随意组合，完全自定义
@@ -83,8 +83,8 @@
 #### 页面展示
 
 <center class="half">
-    <img src=".\picture\network_page_0.png" width="300"/>
-    <img src=".\picture\network_page_1.png" width="300"/>
+    <img src=".\picture\network_page_0.png" height="500"/>
+    <img src=".\picture\network_page_1.png" height="500"/>
 </center>
 
 
@@ -158,8 +158,8 @@
 #### 页面展示
 
 <center class="half">
-    <img src=".\picture\overclock_page_0.png" width="300"/>
-    <img src=".\picture\overclock_page_1.png" width="300"/>
+    <img src=".\picture\overclock_page_0.png" height="500"/>
+    <img src=".\picture\overclock_page_1.png" height="500"/>
 </center>
 
 * 在选择用户模式时会将滑动条显示并允许调节。
@@ -251,20 +251,20 @@
 
 * 单击对应的项目可以查看详细项目情况，光标滑到对应项目项目边框加粗。
 <center class="half">
-    <img src=".\picture\todo_page_0.png" width="300"/>
-    <img src=".\picture\todo_page_1.png" width="300"/>
+    <img src=".\picture\todo_page_0.png" height="500"/>
+    <img src=".\picture\todo_page_1.png" height="500"/>
 </center>
 
 * 右击项目显示更多对项目的操作。
 <center class="half">
-    <img src=".\picture\todo_page_2.png" width="300"/>
-    <img src=".\picture\todo_page_5.png" width="300"/>
+    <img src=".\picture\todo_page_2.png" height="500"/>
+    <img src=".\picture\todo_page_5.png" height="500"/>
 </center>
 
 * 添加、修改操作有对应的值校验。
 <center class="half">
-    <img src=".\picture\todo_page_3.png" width="300"/>
-    <img src=".\picture\todo_page_4.png" width="300"/>
+    <img src=".\picture\todo_page_3.png" height="500"/>
+    <img src=".\picture\todo_page_4.png" height="500"/>
 </center>
 
 ### 事务页面`Access`
@@ -334,15 +334,21 @@
 
 * 光标滑到对应项目项目边框加粗。
 <center class="half">
-    <img src=".\picture\access_page_0.png" width="300"/>
-    <img src=".\picture\access_page_2.png" width="300"/>
+    <img src=".\picture\access_page_0.png" height="500"/>
+    <img src=".\picture\access_page_2.png" height="500"/>
 </center>
 
 * 单击对应的项目可以查看详细项目情况，同样可以右键显示更多，此处不展示。添加时对多选项进行了约束如果不显示窗口则一定要完成后退出。
 <center class="half">
-    <img src=".\picture\access_page_1.png" width="300"/>
-    <img src=".\picture\access_page_3.png" width="300"/>
+    <img src=".\picture\access_page_1.png" height="500"/>
+    <img src=".\picture\access_page_3.png" height="500"/>
 </center>
+
+* 出错队列。
+<center class="half">
+    <img src=".\picture\access_page_4.png" height="500"/>
+</center>
+
 
 ### 日程页面`Schedule`
 
@@ -414,14 +420,14 @@
 
 * 根据当前时间自动选择对应的星期，并显示对应的日程。
 <center class="half">
-    <img src=".\picture\schedule_page_0.png" width="300"/>
-    <img src=".\picture\schedule_page_1.png" width="300"/>
+    <img src=".\picture\schedule_page_0.png" height="500"/>
+    <img src=".\picture\schedule_page_1.png" height="500"/>
 </center>
 
 * 添加值校验、日程可选择每天。
 <center class="half">
-    <img src=".\picture\schedule_page_2.png" width="300"/>
-    <img src=".\picture\schedule_page_3.png" width="300"/>
+    <img src=".\picture\schedule_page_2.png" height="500"/>
+    <img src=".\picture\schedule_page_3.png" height="500"/>
 </center>
 
 ### 设置页面`Setting`
@@ -531,14 +537,14 @@
 
 * 可对性能页面显示项目进行自由的修改、包括显示的元素位置、元素种类。
 <center class="half">
-    <img src=".\picture\settings_page_0.png" width="300"/>
-    <img src=".\picture\settings_page_1.png" width="300"/>
+    <img src=".\picture\settings_page_0.png" height="500"/>
+    <img src=".\picture\settings_page_1.png" height="500"/>
 </center>
 
 * 更多设置，包括全球化等更多应用显示设置。
 <center class="half">
-    <img src=".\picture\settings_page_2.png" width="300"/>
-    <img src=".\picture\settings_page_3.png" width="300"/>
+    <img src=".\picture\settings_page_2.png" height="500"/>
+    <img src=".\picture\settings_page_3.png" height="500"/>
 </center>
 
 # 自实现类
@@ -657,5 +663,54 @@
 
 ## `Tools`工作目录
 
-### `StringResource`类
+### `performance_monitor_winui3.Tools`命名空间
 
+#### `StringResource`类
+
+这个类是用于管理`resw`文件的，用于取出其种预定义的文本对，其会根据当前的语言动态选择。
+
+* 重要方法
+  * `string Get(string key)`    返回`key`对应的文本值。
+
+#### `Utils`类
+
+这个类用于管理一些本项目中频繁用到的方法，采用静态类封装。
+
+* 重要方法
+  * `string ByteFormat(double value, Unit unit)`    将给定的数值`value`按照`baseNumber`以及当前单位`unit`转化为可3位显示的最小单位，并附上对应的单位字符。
+  * `string TimeSpan2String(TimeSpan value)`    将`TimeSpan`转为时间间隔的字符表示，eg: "2days, 10:00:01"、"1day, 10:00:01"、"10:00:01"。
+  * `TextBlock AddTitle2Grid(Grid grid, string text, int row, Color fontColor, int fontSize = 16, double height = 1.2)` 将一个装有`TextBlock`的`Grid`放入给定的`grid`的对应行处，这个函数会自动为`grid`添加对应的行说明、列说明，并返回`TextBlock`对象。
+  * `Tuple<TextBlock, TextBlock> AddPairGrid2Grid(Grid grid, string keyStr, string valueStr, int row, int keySize = 4, int valueSize = 6, int fontSize = 14, double height = 1.2)`  将一个装有以`TextBlock`表示的`key`/`value`的键值对的`Grid`放入给定的`grid`的对应行处，这个函数会自动为`grid`添加对应的行说明、列说明，并返回这两个`TextBlock`对象。
+  * `Tuple<TextBlock, TextBlock> AddPairWithProgressBarGrid2Grid(Grid grid, string keyStr, int val, int row, string? showValue = null, int keySize = 4, int progressBarSize = 5, int valueSize = 1, int fontSize = 14, double height = 1.2)`   将一个装有以`TextBlock`表示的`key`/`value`的键值对的`Grid`放入给定的`grid`的对应行处，并带有进度条，这个函数会自动为`grid`添加对应的行说明、列说明，并返回这两个`TextBlock`对象。
+  * `ProgressRing AddLoadingProgressBar2Grid(Grid grid, int row)`   将一个加载进度条放在`grid`的对应行处，并返回该进度条。
+  * `void SetProgressBar(ProgressBar progressBar, int value)`   设置根据`value`设置`progressBar`的样式。
+* 重要属性
+  * `enum Unit` 单位的枚举类型。
+  * `int baseNumber`    单位基数，默认为1024。
+  * `string[] postfix`  单位的表示。
+
+# 开发计划
+
+| 任务 | 完成情况 |
+| -- | ---- |
+| 硬件工作情况监控 | Done |
+| 硬件信息收集方式与硬件无关 | |
+| 网络监控 | Done     |
+| 网络信息收集方式与硬件无关 | Done     |
+| Dell AWCC 集成 | Done     |
+| 待办列表 | Done     |
+| 快速指令 | Done     |
+| 日程表 | Done     |
+| 网络报文发送器 |  |
+
+# Q&A
+
+* 为什么使用`Windows SDK 1.5`
+  *  `Windows SDK 1.5`具有与新一代`Windows`较为统一的风格
+  *  社区较为活跃，但需要注意的一点是`Windows SDK 1.5`没有对应的设计器、页面预览器。
+* 为什么提出这个项目？
+  * 作为本人入门`Windows SDK 1.5`/`Windows编程`的一个小项目（所以难免存在不合理的地方，请指正）
+  * 作为本人平时需要的工具的集成，加速工作流
+* 为什么我在使用软件监控时硬件信息完全不对？
+  * 由于在硬件信息收集的时候存在大量的魔法数字，故难免存在
+  * 目前的唯一解决方案是根据实际情况，修改`LHMReader`工具类，只需要修改其中的`DataUpdate`就可以解决该问题
