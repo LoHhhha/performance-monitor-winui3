@@ -7,126 +7,136 @@
     xmlns:helpers="using:performance_monitor_winui3.Helpers"
     xmlns:xaml="using:Microsoft.UI.Xaml"
 	xmlns:models="using:performance_monitor_winui3.Models"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
     <Page.Resources>
-        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
     </Page.Resources>
-	<ScrollView>
+    <ScrollView VerticalScrollBarVisibility="Hidden">
         <StackPanel
             x:Name="ContentArea">
             <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}"/>
             <StackPanel Margin="{StaticResource SmallTopBottomMargin}">
-				
-				<!--ThemeSetting-->
-                <TextBlock x:Uid="Settings_Theme" FontSize="16" FontWeight="SemiBold"/>
-                <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                    <RadioButton
-                        x:Uid="Settings_Theme_Light"
-                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
-                        FontSize="14"
-                        GroupName="AppTheme">
-                        <RadioButton.CommandParameter>
-                            <xaml:ElementTheme>Light</xaml:ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
-                    <RadioButton
-                        x:Uid="Settings_Theme_Dark"
-                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
-                        FontSize="14"
-                        GroupName="AppTheme">
-                        <RadioButton.CommandParameter>
-                            <xaml:ElementTheme>Dark</xaml:ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
-                    <RadioButton
-                        x:Uid="Settings_Theme_Default"
-                        Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}"
-                        FontSize="14"
-                        GroupName="AppTheme">
-                        <RadioButton.CommandParameter>
-                            <xaml:ElementTheme>Default</xaml:ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
-                </StackPanel>
-				<!--ThemeSetting-->
 
-				<!--MonitorOrderSetting-->
-				<TextBlock x:Uid="Settings_MonitorOrder" FontSize="16" FontWeight="SemiBold"/>
-                <StackPanel>
-                    <Border CornerRadius="8"
-					Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
-					Padding="8"
-					Margin="10">
-						<ListView ItemsSource="{x:Bind ViewModel.MonitorItems}" SelectionMode="None" VerticalAlignment="Center">
-							<ListView.ItemTemplate>
-								<DataTemplate x:DataType="models:MonitorOrderListItem">
-									<Grid>
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="*"/>
-											<ColumnDefinition Width="Auto"/>
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Text="{x:Bind Text}" FontSize="14" TextAlignment="Left" VerticalAlignment="Center"/>
-										<StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5">
-											<Button Content="↑" Click="MonitorOrderMoveItemUp"/>
-                                            <Button Content="↓" Click="MonitorOrderMoveItemDown"/>
-                                            <Button Content="×" Click="MonitorOrderDeleteItem"/>
-										</StackPanel>
-									</Grid>
-								</DataTemplate>
-							</ListView.ItemTemplate>
-						</ListView>
-					</Border>
+                <!--ThemeSetting-->
+                <controls:SettingsCard x:Uid="Settings_Theme"
+                                       HeaderIcon="{ui:FontIcon Glyph=&#xE2B1;}">
+                    <ComboBox
+                    FontSize="14"  
+                    Name="ThemeComboBox"
+                    SelectionChanged="ThemeComboBoxSelectionChanged">
+                        <ComboBoxItem x:Uid="Settings_Theme_Light" />
+                        <ComboBoxItem x:Uid="Settings_Theme_Dark" />
+                        <ComboBoxItem x:Uid="Settings_Theme_Default" />
+                    </ComboBox>
+                </controls:SettingsCard>
+                <!--ThemeSetting-->
 
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="3*"/>
-							<ColumnDefinition Width="3*"/>
-                            <ColumnDefinition Width="4*"/>
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-						</Grid.RowDefinitions>
+                <!--MonitorOrderSetting-->
+                <controls:SettingsExpander x:Uid="Settings_MonitorOrder"
+                                           HeaderIcon="{ui:FontIcon Glyph=&#xEA37;}">
+                    <controls:SettingsExpander.ItemsHeader>
+                        <ListView ItemsSource="{x:Bind ViewModel.MonitorItems}" Margin="0,10,0,0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:MonitorOrderListItem">
+                                    <Grid Margin="0,10,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{x:Bind Text}" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5">
+                                            <Button DataContext="{x:Bind}" Content="↑" FontWeight="SemiBold" Click="MonitorOrderMoveItemUp"/>
+                                            <Button DataContext="{x:Bind}" Content="↓" FontWeight="SemiBold" Click="MonitorOrderMoveItemDown"/>
+                                            <Button DataContext="{x:Bind}" Content="×" FontWeight="SemiBold" Click="MonitorOrderDeleteItem"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </controls:SettingsExpander.ItemsHeader>
+                    <controls:SettingsExpander.ItemsFooter>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Column="0" 
+                                    x:Uid="Settings_MonitorOrder_AddItem"
+                                    HorizontalAlignment="Stretch"
+                                    Margin="10"
+                                    Click="MonitorOrderAddItemButton">
+                            </Button>
+                            <Button Grid.Column="1" 
+                                    x:Name="MonitorOrderClearButton" 
+                                    x:Uid="Settings_MonitorOrder_Clear" 
+                                    Click="MonitorOrderClear" 
+                                    HorizontalAlignment="Stretch"
+                                    Margin="10"/>
+                            <Button Grid.Column="2" 
+                                    x:Name="MonitorOrderConfirmButton" 
+                                    x:Uid="Settings_MonitorOrder_Confirm" 
+                                    Click="MonitorOrderConfirm" 
+                                    HorizontalAlignment="Stretch"
+                                    Margin="10"/>
+                        </Grid>
+                    </controls:SettingsExpander.ItemsFooter>
+                </controls:SettingsExpander>
+                <!--MonitorOrderSetting-->
 
-                        <Button Grid.Column="0" 
-								x:Uid="Settings_MonitorOrder_AddItem"
-								HorizontalAlignment="Stretch"
-								Margin="10"
-                                Click="MonitorOrderAddItemButton">
-                        </Button>
-						<Button Grid.Column="1" 
-								x:Name="MonitorOrderClearButton" 
-								x:Uid="Settings_MonitorOrder_Clear" 
-								Click="MonitorOrderClear" 
-								HorizontalAlignment="Stretch"
-								Margin="10"/>
-						<Button Grid.Column="2" 
-								x:Name="MonitorOrderConfirmButton" 
-								x:Uid="Settings_MonitorOrder_Confirm" 
-								Click="MonitorOrderConfirm" 
-								HorizontalAlignment="Stretch"
-								Margin="10"/>
-					</Grid>
+                <!--TimerSetting-->
+                <controls:SettingsExpander x:Uid="SettingsPage_Timer"
+                       HeaderIcon="{ui:FontIcon Glyph=&#xF182;}">
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard x:Uid="SettingsPage_MonitorTimer" HeaderIcon="{ui:FontIcon Glyph=&#xE77F;}">
+                            <StackPanel Orientation="Horizontal">
+                                <NumberBox Name="MonitorTimerNumberBox" Maximum="3600000" ValueChanged="MonitorTimerNumberBoxValueChange"/>
+                                <TextBlock x:Uid="SettingsPage_TimerFormat" VerticalAlignment="Center" Margin="5"/>
+                            </StackPanel>
+                        </controls:SettingsCard>
+                        <controls:SettingsCard x:Uid="SettingsPage_NetworkTimer" HeaderIcon="{ui:FontIcon Glyph=&#xE909;}">
+                            <StackPanel Orientation="Horizontal">
+                                <NumberBox Name="NetworkTimerNumberBox" Maximum="3600000" ValueChanged="NetworkTimerNumberBoxValueChange"/>
+                                <TextBlock x:Uid="SettingsPage_TimerFormat" VerticalAlignment="Center" Margin="5"/>
+                            </StackPanel>
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
+                <!--TimerSetting-->
+            </StackPanel>
 
-				</StackPanel>
-				
-			</StackPanel>
-
-
+            <TextBlock x:Uid="Settings_Language" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <controls:SettingsCard Margin="{StaticResource SmallTopBottomMargin}"
+                                   x:Uid="Settings_LanguageCard"
+                                   HeaderIcon="{ui:FontIcon Glyph=&#xE774;}">
+                <ComboBox
+                    FontSize="14"  
+                    Name="LanguageComboBox"
+                    SelectionChanged="LanguageComboBoxSelectionChanged">
+                    <x:String>en-us</x:String>
+                    <x:String>zh-cn</x:String>
+                </ComboBox>
+            </controls:SettingsCard>
 
             <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <controls:SettingsExpander Header="{x:Bind ViewModel.AppDisplayName}"
+                                       Description="{x:Bind ViewModel.AppDescription}"
+                                       Margin="{StaticResource SmallTopBottomMargin}"
+                                       IsExpanded="True"
+                                       HeaderIcon="{ui:FontIcon Glyph=&#xE946;}">
+                <controls:SettingsExpander.Items>
+                    <controls:SettingsCard Header="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" x:Uid="Settings_AboutDescription">
+                        <HyperlinkButton x:Uid="Settings_GitHub"/>
+                    </controls:SettingsCard>
+                </controls:SettingsExpander.Items>
+            </controls:SettingsExpander>
 
-            <StackPanel Margin="{StaticResource XSmallTopMargin}">
-                <TextBlock Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" />
-
-                <TextBlock
-                    x:Uid="Settings_AboutDescription"
-                    Margin="{StaticResource XSmallTopMargin}"
-                    Style="{ThemeResource BodyTextBlockStyle}" />
-                <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink"  />
-            </StackPanel>
         </StackPanel>
     </ScrollView>
 </Page>

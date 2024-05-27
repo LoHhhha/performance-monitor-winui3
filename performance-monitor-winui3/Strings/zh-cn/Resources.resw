@@ -146,7 +146,7 @@
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>个性化</value>
   </data>
-  <data name="Settings_Theme.Text" xml:space="preserve">
+  <data name="Settings_Theme.Header" xml:space="preserve">
     <value>选择模式</value>
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
@@ -156,21 +156,15 @@
     <value>深色模式</value>
   </data>
   <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>默认</value>
+    <value>跟随系统</value>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
     <value>关于程序</value>
   </data>
-  <data name="Settings_AboutDescription.Text" xml:space="preserve">
+  <data name="Settings_AboutDescription.Description" xml:space="preserve">
     <value>该程序由lohhhha设计。</value>
   </data>
-  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>隐私声明</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://github.com/lohhhha</value>
-  </data>
-  <data name="Settings_MonitorOrder.Text" xml:space="preserve">
+  <data name="Settings_MonitorOrder.Header" xml:space="preserve">
     <value>性能页显示的元素</value>
   </data>
   <data name="Settings_MonitorOrder_AddItem.Content" xml:space="preserve">
@@ -460,5 +454,44 @@
   </data>
   <data name="Shell_Schedule.Content" xml:space="preserve">
     <value>日程</value>
+  </data>
+  <data name="ToDoListPage_FinishTime.Text" xml:space="preserve">
+    <value>完成时间</value>
+  </data>
+  <data name="Settings_MonitorOrder.Description" xml:space="preserve">
+    <value>根据喜好添加、修改、删除性能页显示的元素</value>
+  </data>
+  <data name="Settings_Theme.Description" xml:space="preserve">
+    <value>更改应用中显示的颜色</value>
+  </data>
+  <data name="Settings_GitHub.Content" xml:space="preserve">
+    <value>GitHub</value>
+  </data>
+  <data name="Settings_GitHub.NavigateUri" xml:space="preserve">
+    <value>https://github.com/LoHhhha/performance-monitor-winui3</value>
+  </data>
+  <data name="SettingsPage_MonitorTimer.Header" xml:space="preserve">
+    <value>性能页面</value>
+  </data>
+  <data name="SettingsPage_NetworkTimer.Header" xml:space="preserve">
+    <value>网络页面</value>
+  </data>
+  <data name="SettingsPage_Timer.Description" xml:space="preserve">
+    <value>设置页面更新线程被唤醒的时间间隔</value>
+  </data>
+  <data name="SettingsPage_Timer.Header" xml:space="preserve">
+    <value>页面刷新时间</value>
+  </data>
+  <data name="SettingsPage_TimerFormat.Text" xml:space="preserve">
+    <value>毫秒</value>
+  </data>
+  <data name="Settings_Language.Text" xml:space="preserve">
+    <value>全球化</value>
+  </data>
+  <data name="Settings_LanguageCard.Description" xml:space="preserve">
+    <value>修改应用的显示的语言，该过程需要重启应用</value>
+  </data>
+  <data name="Settings_LanguageCard.Header" xml:space="preserve">
+    <value>语言</value>
   </data>
 </root>

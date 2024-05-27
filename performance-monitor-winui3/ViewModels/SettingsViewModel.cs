@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
+using System.Resources;
 using System.Windows.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,6 +15,7 @@ using performance_monitor_winui3.Contracts.Services;
 using performance_monitor_winui3.Helpers;
 using performance_monitor_winui3.Models;
 using Windows.ApplicationModel;
+using Windows.Storage;
 
 
 namespace performance_monitor_winui3.ViewModels;
@@ -28,11 +31,13 @@ public partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty]
     private string _versionDescription;
 
+    [ObservableProperty]
+    private string _appDisplayName;
 
-    public ICommand SwitchThemeCommand
-    {
-        get;
-    }
+    [ObservableProperty]
+    private string _appDescription;
+
+
 
     /* begin: code for Monitor order setting */
     // using ObservableCollection can auto redraw the windows
@@ -77,24 +82,53 @@ public partial class SettingsViewModel : ObservableRecipient
     {
         MonitorItems.Remove(item);
     }
+    /* end: code for Monitor order setting */
 
+    /* begin: code fot timer */
+    public static uint MonitorTimerIntervalChange(uint value)
+    {
+        try
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values[MonitorViewModel.TimerIntervalKey] = value;
+            return value;
+        }
+        catch { }
+        return MonitorViewModel.TimerIntervalDefaultValue;
+    }
+
+    public static uint NetworkTimerIntervalChange(uint value)
+    {
+        try
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values[NetworkViewModel.TimerIntervalKey] = value;
+            return value;
+        }
+        catch { }
+        return NetworkViewModel.TimerIntervalDefaultValue;
+    }
+    /* end: code fot timer */
+
+    /* begin: code for theme setting */
     public SettingsViewModel(IThemeSelectorService themeSelectorService)
     {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
         _versionDescription = GetVersionDescription();
-
-        SwitchThemeCommand = new RelayCommand<ElementTheme>(
-            async (param) =>
-            {
-                if (ElementTheme != param)
-                {
-                    ElementTheme = param;
-                    await _themeSelectorService.SetThemeAsync(param);
-                }
-            });
+        _appDescription = "AppDescription".GetLocalized();
+        _appDisplayName = "AppDisplayName".GetLocalized();
     }
-    /* end: code for Monitor order setting */
+
+    public async Task ChangeThemeAsync(ElementTheme element)
+    {
+        if (ElementTheme!=element)
+        {
+            ElementTheme = element;
+            await _themeSelectorService.SetThemeAsync(element);
+        }
+    }
+    /* end: code for theme setting */ 
 
     private static string GetVersionDescription()
     {

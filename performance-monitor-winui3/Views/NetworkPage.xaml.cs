@@ -5,6 +5,7 @@ using performance_monitor_winui3.ViewModels;
 using Windows.UI;
 using performance_monitor_winui3.Tools;
 using Microsoft.UI.Xaml.Navigation;
+using Windows.Storage;
 
 
 namespace performance_monitor_winui3.Views;
@@ -17,6 +18,7 @@ public enum NetworkInfoType
 public sealed partial class NetworkPage : Page
 {
     private readonly DispatcherTimer timer;
+    private uint timerInterval = NetworkViewModel.TimerIntervalDefaultValue;
     private static readonly Semaphore timerNotRunning = new Semaphore(1, 1);
 
     public readonly List<Func<bool>> setter;
@@ -76,14 +78,14 @@ public sealed partial class NetworkPage : Page
 
         // timer
         {
-            timer = new DispatcherTimer();
+            timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(NetworkViewModel.TimerIntervalDefaultValue) };
             // System.Timers.Timer and System.Windows.Threading.DispatcherTimer
             // the back is running at UI Threading, so it can change the controls.
             timer.Tick += async (object? sender, object? e) =>
             {
                 await PageUpdate();
             };
-            timer.Interval = TimeSpan.FromMilliseconds(2000);
+            TimerIntervalUpdate();
             timer.Start();
         }
     }
@@ -97,7 +99,23 @@ public sealed partial class NetworkPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
+        TimerIntervalUpdate();
         timer.Start();
+    }
+
+    private void TimerIntervalUpdate()
+    {
+        try
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            var newTimerInterval = (uint)localSettings.Values[NetworkViewModel.TimerIntervalKey];
+            timerInterval = newTimerInterval;
+            timer.Interval = TimeSpan.FromMilliseconds(newTimerInterval);
+        }
+        catch
+        {
+            timer.Interval = TimeSpan.FromMilliseconds(timerInterval);
+        }
     }
 
     public async Task PageUpdate()

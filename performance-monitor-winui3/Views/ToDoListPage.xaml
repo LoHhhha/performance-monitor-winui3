@@ -96,7 +96,7 @@
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind TaskItem.TaskName}" FontWeight="SemiBold" FontSize="16" TextAlignment="Left" VerticalAlignment="Center"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" x:Uid="ToDoListPage_Deadline" FontSize="14" TextAlignment="Left" VerticalAlignment="Center"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Bind TaskItem.DeadlineFormat}" FontSize="14" TextAlignment="Right" VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="ToDoListPage_Finish" FontSize="14" TextAlignment="Left" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" x:Uid="ToDoListPage_FinishTime" FontSize="14" TextAlignment="Left" VerticalAlignment="Center"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Bind FinishTimeFormat}" FontSize="14" TextAlignment="Right" VerticalAlignment="Center"/>
                                 </Grid>
                             </Border>

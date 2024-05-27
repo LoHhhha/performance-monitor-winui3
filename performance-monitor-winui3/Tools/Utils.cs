@@ -231,15 +231,10 @@ static class Utils
             progressBar.ShowPaused = false;
             progressBar.ShowError = false;
         }
-        else if (value <= 80)
+        else
         {
             progressBar.ShowPaused = true;
             progressBar.ShowError = false;
-        }
-        else
-        {
-            progressBar.ShowPaused = false;
-            progressBar.ShowError = true;
         }
     }
 

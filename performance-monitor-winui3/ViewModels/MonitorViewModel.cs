@@ -8,6 +8,8 @@ namespace performance_monitor_winui3.ViewModels;
 public partial class MonitorViewModel : ObservableRecipient
 {
     public static List<MonitorInfoType> _selectedTypes;
+    public static uint TimerIntervalDefaultValue = 1000;
+    public static string TimerIntervalKey = "MonitorTimerInterval";
 
     public static void SetSelectedTypes(List<MonitorInfoType> types)
     {

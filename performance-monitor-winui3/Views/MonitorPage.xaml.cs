@@ -6,6 +6,9 @@ using Windows.UI;
 using performance_monitor_winui3.Tools;
 using performance_monitor_winui3.Models;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI;
+using Windows.Storage;
+using System.Diagnostics;
 
 namespace performance_monitor_winui3.Views;
 
@@ -19,6 +22,7 @@ public sealed partial class MonitorPage : Page
     }
 
     private readonly DispatcherTimer timer;
+    private uint timerInterval = MonitorViewModel.TimerIntervalDefaultValue;
     private static readonly Semaphore timerNotRunning = new Semaphore(1, 1);
 
     private readonly List<Func<bool>> setter;
@@ -125,6 +129,12 @@ public sealed partial class MonitorPage : Page
                     Utils.AddTitle2Grid(DisplayGrid, gpu.Name, rowCount++, themeColor);
 
                     if (gpu.Temperature != -1) Utils.AddPairWithProgressBarGrid2Grid(DisplayGrid, "Temperature", gpu.Temperature, rowCount++, $"{gpu.Temperature}C");
+                    
+                    if (gpu.MemoryUsed != -1 && gpu.MemoryTotal != -1)
+                    {
+                        var memoryUsage = gpu.MemoryUsed * 100 / gpu.MemoryTotal;
+                        Utils.AddPairWithProgressBarGrid2Grid(DisplayGrid, "Memory Usage", memoryUsage, rowCount++);
+                    }
 
                     if (gpu.Usage != -1) Utils.AddPairWithProgressBarGrid2Grid(DisplayGrid, "Usage", gpu.Usage, rowCount++);
                     if (gpu.VideoUsage != -1) Utils.AddPairWithProgressBarGrid2Grid(DisplayGrid, "Video Usage", gpu.VideoUsage, rowCount++);
@@ -150,8 +160,10 @@ public sealed partial class MonitorPage : Page
                         Utils.AddPairGrid2Grid(DisplayGrid, "Memory Used", $"{gpu.MemoryUsed}MiB", rowCount++);
                     }
 
-                    if (gpu.PCIeTx != -1) Utils.AddPairGrid2Grid(DisplayGrid, "PCIeTx", Utils.ByteFormat(gpu.PCIeTx, Utils.Unit.KiB) + "ps", rowCount++);
-                    if (gpu.PCIeRx != -1) Utils.AddPairGrid2Grid(DisplayGrid, "PCIeRx", Utils.ByteFormat(gpu.PCIeRx, Utils.Unit.KiB) + "ps", rowCount++);
+                    if (gpu.PCIeTx != -1&&gpu.PCIeRx != -1) {
+                        var transfer = gpu.PCIeRx + gpu.PCIeTx;
+                        if (gpu.PCIeTx != -1) Utils.AddPairGrid2Grid(DisplayGrid, "Transfer", Utils.ByteFormat(transfer, Utils.Unit.KiB) + "ps", rowCount++);
+                    }
                 }
 
                 return true;
@@ -213,14 +225,14 @@ public sealed partial class MonitorPage : Page
 
         // timer
         {
-            timer = new DispatcherTimer();
+            timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(MonitorViewModel.TimerIntervalDefaultValue) };
             // System.Timers.Timer and System.Windows.Threading.DispatcherTimer
             // the back is running at UI Threading, so it can change the controls.
             timer.Tick += async (object? sender, object? e) =>
             {
                 await PageUpdate();
             };
-            timer.Interval = TimeSpan.FromMilliseconds(1000);
+            TimerIntervalUpdate();
             timer.Start();
         }
     }
@@ -234,7 +246,23 @@ public sealed partial class MonitorPage : Page
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
+        TimerIntervalUpdate();
         timer.Start();
+    }
+
+    private void TimerIntervalUpdate()
+    {
+        try
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            var newTimerInterval = (uint)localSettings.Values[MonitorViewModel.TimerIntervalKey];
+            timerInterval = newTimerInterval;
+            timer.Interval = TimeSpan.FromMilliseconds(newTimerInterval);
+        }
+        catch
+        {
+            timer.Interval = TimeSpan.FromMilliseconds(timerInterval);
+        }
     }
 
     public async Task PageUpdate()

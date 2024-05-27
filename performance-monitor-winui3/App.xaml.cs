@@ -1,7 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Globalization;
+using CommunityToolkit.WinUI.Notifications;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.ApplicationModel.Resources;
 using performance_monitor_winui3.Activation;
 using performance_monitor_winui3.Contracts.Services;
 using performance_monitor_winui3.Core.Contracts.Services;
@@ -10,8 +13,10 @@ using performance_monitor_winui3.Helpers;
 using performance_monitor_winui3.Models;
 using performance_monitor_winui3.Notifications;
 using performance_monitor_winui3.Services;
+using performance_monitor_winui3.Tools;
 using performance_monitor_winui3.ViewModels;
 using performance_monitor_winui3.Views;
+using Windows.Storage;
 
 namespace performance_monitor_winui3;
 
@@ -98,14 +103,17 @@ public partial class App : Application
         Build();
 
         App.GetService<IAppNotificationService>().Initialize();
+        
 
         UnhandledException += App_UnhandledException;
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        // TODO: Log and handle exceptions as appropriate.
-        // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        var errorToast = new ToastContentBuilder();
+        errorToast.AddText("Fatal Error!!!");
+        errorToast.AddText(e.Message);
+        errorToast.Show();
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
