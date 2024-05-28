@@ -1,6 +1,6 @@
 # 效率工具箱文档
 
-效率工具箱是由`LoHhhha`开发的一款基于`Windows SDK 1.5`开发的软件。旨在实现一些极客功能如：计算机性能监测、网络IP地址查看、TODO列表、日程表等功能，同时集成`Dell G15`系列`AWCC-WMI`相关接口，实现风扇转速调整、性能模式切换的功能。
+效率工具箱是由`LoHhhha`开发的一款基于`Windows SDK 1.5`(`WinUI3`)开发的软件。旨在实现一些极客功能如：计算机性能监测、网络IP地址查看、TODO列表、日程表等功能，同时集成`Dell G15`系列`AWCC-WMI`相关接口，实现风扇转速调整、性能模式切换的功能。
 
 注：文档给出的前端设置均为简化版，未指定任何参数，仅做参考，具体请参见对应源代码。
 
@@ -672,7 +672,7 @@
 * 重要方法
   * `string Get(string key)`    返回`key`对应的文本值。
 
-#### `Utils`类
+### `Utils`类
 
 这个类用于管理一些本项目中频繁用到的方法，采用静态类封装。
 
@@ -684,10 +684,12 @@
   * `Tuple<TextBlock, TextBlock> AddPairWithProgressBarGrid2Grid(Grid grid, string keyStr, int val, int row, string? showValue = null, int keySize = 4, int progressBarSize = 5, int valueSize = 1, int fontSize = 14, double height = 1.2)`   将一个装有以`TextBlock`表示的`key`/`value`的键值对的`Grid`放入给定的`grid`的对应行处，并带有进度条，这个函数会自动为`grid`添加对应的行说明、列说明，并返回这两个`TextBlock`对象。
   * `ProgressRing AddLoadingProgressBar2Grid(Grid grid, int row)`   将一个加载进度条放在`grid`的对应行处，并返回该进度条。
   * `void SetProgressBar(ProgressBar progressBar, int value)`   设置根据`value`设置`progressBar`的样式。
+  * `string GetProgressString(int value)`   返回一个字符表示的进度条，eg:"[▉87%]"
 * 重要属性
   * `enum Unit` 单位的枚举类型。
   * `int baseNumber`    单位基数，默认为1024。
   * `string[] postfix`  单位的表示。
+  * `char[] ProgressChars`  进度条的字符表示。
 
 # 开发计划
 

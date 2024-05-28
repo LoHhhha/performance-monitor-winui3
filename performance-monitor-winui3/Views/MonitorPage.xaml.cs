@@ -77,7 +77,7 @@ public sealed partial class MonitorPage : Page
                     var eachUsage = "";
                     for (int i = 0; i < cpu.ThreadCount; i++)
                     {
-                        eachUsage += $"[{cpu.Usage[i],3}%]";
+                        eachUsage += Utils.GetProgressString(cpu.Usage[i]);
                         if (i + 1 != cpu.ThreadCount && i % 4 == 3)
                         {
                             eachUsage += '\n';

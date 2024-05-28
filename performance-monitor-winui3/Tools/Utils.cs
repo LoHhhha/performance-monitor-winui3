@@ -238,93 +238,12 @@ static class Utils
         }
     }
 
-    //public static Grid AddCPUThreadUsageGrid2Grid(Grid grid, string keyStr, CpuInformation cpu, int row, int ringRowNumber = 4, int keySize = 4, int valueSize = 6, int fontSize = 14, double height = 1.2)
-    //{
-
-    //    Grid subGrid = new Grid();
-    //    // column
-    //    var keyColumnDefinition = new ColumnDefinition();
-    //    keyColumnDefinition.Width = new GridLength(keySize, GridUnitType.Star);
-    //    var valueColumnDefinition = new ColumnDefinition();
-    //    valueColumnDefinition.Width = new GridLength(valueSize, GridUnitType.Star);
-    //    subGrid.ColumnDefinitions.Add(keyColumnDefinition);
-    //    subGrid.ColumnDefinitions.Add(valueColumnDefinition);
-    //    // row
-    //    var pairRowDefinition = new RowDefinition();
-    //    pairRowDefinition.Height = new GridLength(height, GridUnitType.Auto);
-    //    subGrid.RowDefinitions.Add(pairRowDefinition);
-
-    //    // define key TextBlock
-    //    var key = new TextBlock();
-    //    key.Text = keyStr;
-    //    key.VerticalAlignment = VerticalAlignment.Top;
-    //    key.FontSize = fontSize;
-    //    key.FontFamily = new FontFamily("Cascadia Mono");
-    //    Grid.SetColumn(key, 0);
-    //    Grid.SetRow(key, 0);
-
-    //    // define rings
-    //    var needRow = (cpu.ThreadCount + ringRowNumber - 1) / ringRowNumber;
-    //    Grid ringGrid = new Grid();
-    //    // row
-    //    for (var i = 0; i < needRow; i++)
-    //    {
-    //        var rowDefinition = new RowDefinition();
-    //        rowDefinition.Height = new GridLength(height, GridUnitType.Auto);
-    //        ringGrid.RowDefinitions.Add(rowDefinition);
-    //    }
-    //    // column
-    //    for (var i = 0; i < ringRowNumber; i++)
-    //    {
-    //        var columnDefinition = new ColumnDefinition();
-    //        columnDefinition.Width = new GridLength(1, GridUnitType.Star);
-    //        ringGrid.ColumnDefinitions.Add(columnDefinition);
-    //    }
-
-    //    for (var i = 0; i < cpu.ThreadCount; i++) 
-    //    {
-    //        int addRow = i / ringRowNumber, addColumn = i % ringRowNumber;
-    //        //ProgressBar progressBar = new ProgressBar();
-
-    //        //var val = cpu.Usage[i];
-    //        //val = val < 0 ? 0 : val;
-    //        //val = val > 100 ? 100 : val;
-
-    //        ////progressBar.Value = val;
-    //        ////if (val < 30) { }
-    //        ////else if (val <= 80)
-    //        ////{
-    //        ////    progressBar.ShowPaused = true;
-    //        ////}
-    //        ////else
-    //        ////{
-    //        ////    progressBar.ShowError = true;
-    //        ////}
-    //        ////progressBar.Margin = new Thickness(0, 5, 0, 5);
-
-    //        //Grid.SetRow(progressBar, addRow);
-    //        //Grid.SetColumn(progressBar, addColumn);
-    //        //ringGrid.Children.Add(progressBar);
-    //    }
-
-
-    //    Grid.SetColumn(ringGrid, 1);
-    //    Grid.SetRow(ringGrid, 0);
-
-    //    // push into subGrid
-    //    subGrid.Children.Add(key);
-    //    subGrid.Children.Add(ringGrid);
-
-    //    // grid row
-    //    var subGridRowDefinition = new RowDefinition();
-    //    subGridRowDefinition.Height = new GridLength(height, GridUnitType.Auto);
-    //    grid.RowDefinitions.Add(subGridRowDefinition);
-
-    //    // push into grid
-    //    Grid.SetRow(subGrid, row);
-    //    Grid.SetColumn(subGrid, 0);
-    //    grid.Children.Add(subGrid);
-
-    //    return subGrid;
-    //}
+    public static readonly char[] ProgressChars = [' ', '▏', '▎', '▎', '▌', '▋', '▊', '▉', '█'];
+    public static string GetProgressString(int value)
+    {
+        value = Math.Max(Math.Min(value, 100), 0);
+        var idx = value * (ProgressChars.Length - 1) / 100;
+        value = Math.Min(99, value);
+        return $"[{ProgressChars[idx]}{value,2}%]";
+    }
 }
