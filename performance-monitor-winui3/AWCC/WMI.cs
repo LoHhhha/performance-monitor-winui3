@@ -10,17 +10,17 @@ namespace AWCC;
 public enum ThermalMode
 {
     Custom = 0,                     // ok
-    Quiet = 150,
+    //Quiet = 150,
     Balanced = 151,                 // ok
-    Performance = 152,
-    FullSpeed = 153,
-    USTT_Balanced = 160,
-    USTT_Performance = 161,
-    USTT_Cool = 162,
-    USTT_Quiet = 163,
-    USTT_FullSpeed = 164,
-    USTT_BatterySaver = 165,
-    G_Mode = 171                    // ok
+    //Performance = 152,
+    //FullSpeed = 153,
+    //USTT_Balanced = 160,
+    //USTT_Performance = 161,
+    //USTT_Cool = 162,
+    //USTT_Quiet = 163,
+    //USTT_FullSpeed = 164,
+    //USTT_BatterySaver = 165,
+    Performance = 171                    // G_Mode
 }
 
 

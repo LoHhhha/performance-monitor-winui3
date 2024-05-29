@@ -4,6 +4,47 @@
 
 注：文档给出的前端设置均为简化版，未指定任何参数，仅做参考，具体请参见对应源代码。
 
+# 主要特性
+
+## WinUI设计规范
+
+<center class="half">
+    <img src=".\picture\show_0.png" height="500"/>
+    <img src=".\picture\show_1.png" height="500"/>
+</center>
+
+## 多类交互
+
+<center class="half">
+    <img src=".\picture\show_2.png" height="500"/>
+    <img src=".\picture\show_3.png" height="500"/>
+</center>
+
+## 再次确认
+
+<center class="half">
+    <img src=".\picture\show_4.png" height="500"/>
+    <img src=".\picture\show_5.png" height="500"/>
+</center>
+
+## 多语言支持
+
+<center class="half">
+    <img src=".\picture\show_6.png" height="500"/>
+    <img src=".\picture\show_7.png" height="500"/>
+</center>
+
+## Toast
+
+<center class="half">
+    <img src=".\picture\show_8.png"/>
+</center>
+
+目前使用`Toast`提示的行为
+
+* `Overclock`页面切换模式
+* 程序异常退出
+
 # 模块
 
 ## 性能监视器模块
@@ -267,6 +308,63 @@
     <img src=".\picture\todo_page_4.png" height="500"/>
 </center>
 
+### 日程页面`Schedule`
+
+#### 实现的功能
+
+* 日程的添加
+  * 可选择星期或是每天需要完成
+  * 日程的名称
+  * 日程的备注
+  * 需要完成的时间段
+* 日程自动按开始时间排序。
+* 在顶部可选择感兴趣的星期需要，下方列表显示对应的工作。
+* 首次打开默认显示当天对应的星期选项。
+
+#### 前端设置
+
+```xaml
+<Grid>
+	<tc:Segmented>
+		<tc:SegmentedItem Content="Mon"/>
+		<tc:SegmentedItem Content="Tue"/>
+		<tc:SegmentedItem Content="Wed"/>
+		<tc:SegmentedItem Content="Thu"/>
+		<tc:SegmentedItem Content="Fri"/>
+        <tc:SegmentedItem Content="Sat"/>
+        <tc:SegmentedItem Content="Sun"/>
+    </tc:Segmented>
+	<ScrollView>
+        <StackPanel>
+            <ProgressRing/>
+			<ListView ItemsSource="{x:Bind ViewItems}">
+				<ListView.ItemTemplate>
+					<DataTemplate x:DataType="models:ScheduleItem">
+						<Border>
+							<Border.ContextFlyout>
+								<MenuFlyout>
+									<MenuFlyoutItem/>
+									<MenuFlyoutSeparator/>
+									<MenuFlyoutItem/>
+									<MenuFlyoutItem/>
+								</MenuFlyout>
+							</Border.ContextFlyout>
+							<Grid>
+								<TextBlock/>
+								<TextBlock/>
+                                <TextBlock/>
+								<TextBlock/>
+							</Grid>
+						</Border>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+        </StackPanel>
+    </ScrollView>
+	<Button/>
+</Grid>
+```
+
 ### 事务页面`Access`
 
 #### 实现的功能
@@ -348,64 +446,6 @@
 <center class="half">
     <img src=".\picture\access_page_4.png" height="500"/>
 </center>
-
-
-### 日程页面`Schedule`
-
-#### 实现的功能
-
-* 日程的添加
-  * 可选择星期或是每天需要完成
-  * 日程的名称
-  * 日程的备注
-  * 需要完成的时间段
-* 日程自动按开始时间排序。
-* 在顶部可选择感兴趣的星期需要，下方列表显示对应的工作。
-* 首次打开默认显示当天对应的星期选项。
-
-#### 前端设置
-
-```xaml
-<Grid>
-	<tc:Segmented>
-		<tc:SegmentedItem Content="Mon"/>
-		<tc:SegmentedItem Content="Tue"/>
-		<tc:SegmentedItem Content="Wed"/>
-		<tc:SegmentedItem Content="Thu"/>
-		<tc:SegmentedItem Content="Fri"/>
-        <tc:SegmentedItem Content="Sat"/>
-        <tc:SegmentedItem Content="Sun"/>
-    </tc:Segmented>
-	<ScrollView>
-        <StackPanel>
-            <ProgressRing/>
-			<ListView ItemsSource="{x:Bind ViewItems}">
-				<ListView.ItemTemplate>
-					<DataTemplate x:DataType="models:ScheduleItem">
-						<Border>
-							<Border.ContextFlyout>
-								<MenuFlyout>
-									<MenuFlyoutItem/>
-									<MenuFlyoutSeparator/>
-									<MenuFlyoutItem/>
-									<MenuFlyoutItem/>
-								</MenuFlyout>
-							</Border.ContextFlyout>
-							<Grid>
-								<TextBlock/>
-								<TextBlock/>
-                                <TextBlock/>
-								<TextBlock/>
-							</Grid>
-						</Border>
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
-        </StackPanel>
-    </ScrollView>
-	<Button/>
-</Grid>
-```
 
 #### 实现方法
 
@@ -685,6 +725,7 @@
   * `ProgressRing AddLoadingProgressBar2Grid(Grid grid, int row)`   将一个加载进度条放在`grid`的对应行处，并返回该进度条。
   * `void SetProgressBar(ProgressBar progressBar, int value)`   设置根据`value`设置`progressBar`的样式。
   * `string GetProgressString(int value)`   返回一个字符表示的进度条，eg:"[▉87%]"
+  * `void SimpleToast(string title, string message)`    发起一个只包含标题、消息的`Toast`
 * 重要属性
   * `enum Unit` 单位的枚举类型。
   * `int baseNumber`    单位基数，默认为1024。
@@ -697,12 +738,15 @@
 | -- | ---- |
 | 硬件工作情况监控 | Done |
 | 硬件信息收集方式与硬件无关 | |
+| 硬件信息图表展示 | |
 | 网络监控 | Done     |
 | 网络信息收集方式与硬件无关 | Done     |
 | Dell AWCC 集成 | Done     |
 | 待办列表 | Done     |
+| 待办提醒 | |
 | 快速指令 | Done     |
 | 日程表 | Done     |
+| 日程提醒 | |
 | 网络报文发送器 |  |
 
 # Q&A

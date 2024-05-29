@@ -75,7 +75,7 @@ public sealed partial class MonitorPage : Page
                     Utils.AddPairWithProgressBarGrid2Grid(DisplayGrid, "Max Usage", cpu.MaxUsage, rowCount++);
 
                     var eachUsage = "";
-                    for (int i = 0; i < cpu.ThreadCount; i++)
+                    for (var i = 0; i < cpu.ThreadCount; i++)
                     {
                         eachUsage += Utils.GetProgressString(cpu.Usage[i]);
                         if (i + 1 != cpu.ThreadCount && i % 4 == 3)

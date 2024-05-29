@@ -11,6 +11,7 @@ using HardwareStruct;
 using Windows.Security.Cryptography.Certificates;
 using Microsoft.Windows.AppNotifications;
 using WinUIEx.Messaging;
+using CommunityToolkit.WinUI.Notifications;
 
 namespace performance_monitor_winui3.Tools;
 
@@ -245,5 +246,13 @@ static class Utils
         var idx = value * (ProgressChars.Length - 1) / 100;
         value = Math.Min(99, value);
         return $"[{ProgressChars[idx]}{value,2}%]";
+    }
+
+    public static void SimpleToast(string title, string message)
+    {
+        var toast = new ToastContentBuilder();
+        toast.AddText(title);
+        toast.AddText(message);
+        toast.Show();
     }
 }

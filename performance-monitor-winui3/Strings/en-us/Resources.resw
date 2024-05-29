@@ -500,4 +500,13 @@
   <data name="Settings_LanguageCard.Header" xml:space="preserve">
     <value>Display Language</value>
   </data>
+  <data name="App_FatalError" xml:space="preserve">
+    <value>Fatal Error!</value>
+  </data>
+  <data name="OverclockPage_ModeSwitchTo" xml:space="preserve">
+    <value>Switch to </value>
+  </data>
+  <data name="OverclockPage_SwitchMode" xml:space="preserve">
+    <value>Mode Changed</value>
+  </data>
 </root>

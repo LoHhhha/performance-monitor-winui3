@@ -110,10 +110,7 @@ public partial class App : Application
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
-        var errorToast = new ToastContentBuilder();
-        errorToast.AddText("Fatal Error!!!");
-        errorToast.AddText(e.Message);
-        errorToast.Show();
+        Utils.SimpleToast(StringResource.Get("App_FatalError"), e.Message);
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)

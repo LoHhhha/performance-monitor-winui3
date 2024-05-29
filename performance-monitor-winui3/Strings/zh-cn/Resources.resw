@@ -494,4 +494,13 @@
   <data name="Settings_LanguageCard.Header" xml:space="preserve">
     <value>语言</value>
   </data>
+  <data name="App_FatalError" xml:space="preserve">
+    <value>致命错误！</value>
+  </data>
+  <data name="OverclockPage_ModeSwitchTo" xml:space="preserve">
+    <value>当前工作模式为</value>
+  </data>
+  <data name="OverclockPage_SwitchMode" xml:space="preserve">
+    <value>模式已更改</value>
+  </data>
 </root>

@@ -102,6 +102,11 @@ public sealed partial class OverclockPage : Page
                 return true;
             });
             ModeSelect.IsEnabled = true;
+
+            Utils.SimpleToast(
+                StringResource.Get("OverclockPage_SwitchMode"),
+                StringResource.Get("OverclockPage_ModeSwitchTo") + OverclockViewModel.Index2Mode[ModeSelect.SelectedIndex].ToString()
+            );
         }
         ModeCheck();
     }
