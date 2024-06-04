@@ -503,4 +503,7 @@
   <data name="OverclockPage_SwitchMode" xml:space="preserve">
     <value>模式已更改</value>
   </data>
+  <data name="App_MultiError" xml:space="preserve">
+    <value>多个目标程序正在运行</value>
+  </data>
 </root>

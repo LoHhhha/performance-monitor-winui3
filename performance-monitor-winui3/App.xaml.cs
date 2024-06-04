@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using CommunityToolkit.WinUI.Notifications;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -50,6 +51,15 @@ public partial class App : Application
 
     public App()
     {
+        var processName = Process.GetCurrentProcess().ProcessName;
+        Process[] processes = Process.GetProcessesByName(processName);
+        // if processes.Length > 1 mean that have the same process!
+        if (processes.Length > 1)
+        {
+            Utils.SimpleToast(StringResource.Get("App_FatalError"), StringResource.Get("App_MultiError"));
+            Environment.Exit(1);
+        }
+
         InitializeComponent();
 
         Host = Microsoft.Extensions.Hosting.Host.

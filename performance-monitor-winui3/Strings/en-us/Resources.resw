@@ -509,4 +509,7 @@
   <data name="OverclockPage_SwitchMode" xml:space="preserve">
     <value>Mode Changed</value>
   </data>
+  <data name="App_MultiError" xml:space="preserve">
+    <value>The program was opened multiple times</value>
+  </data>
 </root>
