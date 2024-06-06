@@ -365,6 +365,29 @@
 </Grid>
 ```
 
+#### 实现方法
+
+* `MVVM`模式开发。
+  * 持久化封装为`ScheduleDao`类，负责控制与嵌入式数据库`LiteDB`交互。
+  * `ObservableCollection<T>`类型的`ViewItems`，在对其操作的同时，使用`ScheduleDao`同步完成持久化。
+  * 前端使用绑定模式显示。
+* `ViewItems`用于记录当前选择下应该显示的日程。
+* 使用动态生成的`ContentDialog`完成对操作的可视化。
+
+#### 页面展示
+
+* 根据当前时间自动选择对应的星期，并显示对应的日程。
+<center class="half">
+    <img src=".\picture\schedule_page_0.png" height="500"/>
+    <img src=".\picture\schedule_page_1.png" height="500"/>
+</center>
+
+* 添加值校验、日程可选择每天。
+<center class="half">
+    <img src=".\picture\schedule_page_2.png" height="500"/>
+    <img src=".\picture\schedule_page_3.png" height="500"/>
+</center>
+
 ### 事务页面`Access`
 
 #### 实现的功能
@@ -445,29 +468,6 @@
 * 出错队列。
 <center class="half">
     <img src=".\picture\access_page_4.png" height="500"/>
-</center>
-
-#### 实现方法
-
-* `MVVM`模式开发。
-  * 持久化封装为`ScheduleDao`类，负责控制与嵌入式数据库`LiteDB`交互。
-  * `ObservableCollection<T>`类型的`ViewItems`，在对其操作的同时，使用`ScheduleDao`同步完成持久化。
-  * 前端使用绑定模式显示。
-* `ViewItems`用于记录当前选择下应该显示的日程。
-* 使用动态生成的`ContentDialog`完成对操作的可视化。
-
-#### 页面展示
-
-* 根据当前时间自动选择对应的星期，并显示对应的日程。
-<center class="half">
-    <img src=".\picture\schedule_page_0.png" height="500"/>
-    <img src=".\picture\schedule_page_1.png" height="500"/>
-</center>
-
-* 添加值校验、日程可选择每天。
-<center class="half">
-    <img src=".\picture\schedule_page_2.png" height="500"/>
-    <img src=".\picture\schedule_page_3.png" height="500"/>
 </center>
 
 ### 设置页面`Setting`
